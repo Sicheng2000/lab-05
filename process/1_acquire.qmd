@@ -1,0 +1,124 @@
+---
+title: "Lab. 05: Harvesting research data"
+author: "Sicheng Wang"
+date: 2024-02-28
+date-modified: today
+format:
+  html:
+    number-sections: true
+    toc: true
+    toc-depth: 1
+bibliography: packages.bib
+---
+# Data Description ([Switchboard-1 Release 2](https://catalog.ldc.upenn.edu/LDC97S62))
+
+## The nature of the data 
+Transcripts of telephone conversations constitute qualitative data.
+
+## The source of the data
+Telephone conversations.
+
+## The acquisition strategy that will be used
+Programmatic download using `download.file()` and decompression with `untar()`.
+
+## The format of the data
+A gzipped tarball file.
+
+## The license of the data
+[LDC User Agreement for Non-Members](https://catalog.ldc.upenn.edu/license/ldc-non-members-agreement.pdf)
+
+# Data Collecction Process
+
+## Load packages
+*    Loading `readr[@readr_p]` for writing and reading data.
+*    Loading `dplyr[@dplyr_p]` for manipulating data.
+*    Loading `fs[@fs_p]` for interacting with file system.
+
+```{r}
+#| label: setup-packages
+#|message: false
+
+# Load packages
+library(readr)
+library(dplyr)
+library(fs)
+```
+
+## Download the data
+Download the [SWDA corpus file](https://catalog.ldc.upenn.edu/LDC97S62) and save it in a temporary location. This ensures that when it is unarchived, the compressed file will be automatically removed. To prevent repeated downloads, use an `if` control statement to check if the unarchived file already exists.
+
+```{r}
+#| label: download-archive
+
+# URL to SWDA corpus file
+file_url <-
+  "https://catalog.ldc.upenn.edu/docs/LDC97S62/swb1_dialogact_annot.tar.gz"
+
+# Create a temporary file space for the SWDA corpus file
+temp_file <- tempfile()
+
+# The directory of decompressed file
+extract_to_dir <- "../data/original/swda/"
+
+# Download SWDA corpus compressed file, if the SWDA corpus has been compressed, no download needed
+if (!dir_exists(extract_to_dir)){ download.file(url = file_url, destfile = temp_file)}
+```
+
+## Decompress the data
+Unarchive the SWDA corpus file and save it in the directory  `data/original/swda`.
+
+```{r}
+#| label: unarchive
+
+# Decompress .zip file and extract to our target directory
+untar(tarfile = temp_file, exdir = extract_to_dir)
+```
+
+## Document the data
+1. Load `qtalrkit[@qtalrkit_p]` to generate a `data_origin` file for noting the basic information of the data.
+
+```{r}
+#| label: creare-data-origin
+
+# Download qtalrkit package
+library(qtalrkit)
+
+# Create a data_origin file
+if (!file.exists("../data/original/data_origin.csv")){create_data_origin("../data/original/data_origin.csv")}
+```
+
+2.  Project structure for the SWDA corpus data acquisition
+
+project/
+├── process/
+│   ├── 1_acquire_data.qmd
+│   └── ...
+├── data/
+│   ├── analysis/
+│   ├── derived/
+│   └── original/
+│       ├── data_origin.csv
+│       └── swda/
+│           
+├── reports/
+├── DESCRIPTION
+├── Makefile
+└── README
+
+# Data
+
+## The resulting data 
+
+## Data origin file
+
+```{r}
+#| label: read data_origin
+#| message: false
+
+#Read data_origin file and assign it to t
+data_origin_t <-
+  read_csv(file = "../data/original/data_origin.csv")
+
+#Present data_origin
+data_origin_t
+```
