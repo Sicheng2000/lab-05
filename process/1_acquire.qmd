@@ -8,7 +8,7 @@ format:
     number-sections: true
     toc: true
     toc-depth: 1
-bibliography: packages.bib
+bibliography: ../packages.bib
 ---
 # Data Description ([Switchboard-1 Release 2](https://catalog.ldc.upenn.edu/LDC97S62))
 
@@ -30,13 +30,14 @@ A gzipped tarball file.
 # Data Collecction Process
 
 ## Load packages
-*    Loading `readr[@readr_p]` for writing and reading data.
-*    Loading `dplyr[@dplyr_p]` for manipulating data.
-*    Loading `fs[@fs_p]` for interacting with file system.
+*    Loading `readr`[@readr_p] for writing and reading data.
+*    Loading `dplyr`[@dplyr_p] for manipulating data.
+*    Loading `fs`[@fs_p] for interacting with file system.
 
 ```{r}
 #| label: setup-packages
-#|message: false
+#| echo: false
+#| message: false
 
 # Load packages
 library(readr)
@@ -71,11 +72,11 @@ Unarchive the SWDA corpus file and save it in the directory  `data/original/swda
 #| label: unarchive
 
 # Decompress .zip file and extract to our target directory
-untar(tarfile = temp_file, exdir = extract_to_dir)
+if(file_exists(temp_file)){untar(tarfile = temp_file, exdir = extract_to_dir)}
 ```
 
 ## Document the data
-1. Load `qtalrkit[@qtalrkit_p]` to generate a `data_origin` file for noting the basic information of the data.
+1. Load `qtalrkit`[@qtalrkit_p] to generate a `data_origin` file for noting the basic information of the data.
 
 ```{r}
 #| label: creare-data-origin
@@ -89,6 +90,7 @@ if (!file.exists("../data/original/data_origin.csv")){create_data_origin("../dat
 
 2.  Project structure for the SWDA corpus data acquisition
 
+<pre>
 project/
 ├── process/
 │   ├── 1_acquire_data.qmd
@@ -104,10 +106,12 @@ project/
 ├── DESCRIPTION
 ├── Makefile
 └── README
+</pre>
 
 # Data
 
 ## The resulting data 
+The extracted data comprises an unarchived file named `swda`, which includes one HTML file located in the `doc` folder, along with 14 folders containing `.utt` files.
 
 ## Data origin file
 

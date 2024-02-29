@@ -56,7 +56,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="1_acquire_files/libs/clipboard/clipboard.min.js"></script>
@@ -81,8 +100,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#data-description" id="toc-data-description" class="nav-link active" data-scroll-target="#data-description">Data Description</a></li>
-  <li><a href="#data-collecction-process" id="toc-data-collecction-process" class="nav-link" data-scroll-target="#data-collecction-process">Data Collecction Process</a></li>
+  <li><a href="#data-description-switchboard-1-release-2" id="toc-data-description-switchboard-1-release-2" class="nav-link active" data-scroll-target="#data-description-switchboard-1-release-2"><span class="header-section-number">1</span> Data Description (Switchboard-1 Release 2)</a></li>
+  <li><a href="#data-collecction-process" id="toc-data-collecction-process" class="nav-link" data-scroll-target="#data-collecction-process"><span class="header-section-number">2</span> Data Collecction Process</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">3</span> Data</a></li>
   </ul>
 </nav>
 </div>
@@ -114,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 28, 2024</p>
+      <p class="date-modified">February 29, 2024</p>
     </div>
   </div>
     
@@ -123,39 +143,145 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="data-description" class="level2">
-<h2 class="anchored" data-anchor-id="data-description">Data Description</h2>
-<!-- the nature of the data 
-the source of the data
-the acquisition strategy that will be used
-the format of the data
-the license of the data-->
+<section id="data-description-switchboard-1-release-2" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Data Description (<a href="https://catalog.ldc.upenn.edu/LDC97S62">Switchboard-1 Release 2</a>)</h1>
+<section id="the-nature-of-the-data" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="the-nature-of-the-data"><span class="header-section-number">1.1</span> The nature of the data</h2>
+<p>Transcripts of telephone conversations constitute qualitative data.</p>
 </section>
-<section id="data-collecction-process" class="level2">
-<h2 class="anchored" data-anchor-id="data-collecction-process">Data Collecction Process</h2>
+<section id="the-source-of-the-data" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="the-source-of-the-data"><span class="header-section-number">1.2</span> The source of the data</h2>
+<p>Telephone conversations.</p>
+</section>
+<section id="the-acquisition-strategy-that-will-be-used" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="the-acquisition-strategy-that-will-be-used"><span class="header-section-number">1.3</span> The acquisition strategy that will be used</h2>
+<p>Programmatic download using <code>download.file()</code> and decompression with <code>untar()</code>.</p>
+</section>
+<section id="the-format-of-the-data" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="the-format-of-the-data"><span class="header-section-number">1.4</span> The format of the data</h2>
+<p>A gzipped tarball file.</p>
+</section>
+<section id="the-license-of-the-data" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="the-license-of-the-data"><span class="header-section-number">1.5</span> The license of the data</h2>
+<p><a href="https://catalog.ldc.upenn.edu/license/ldc-non-members-agreement.pdf">LDC User Agreement for Non-Members</a></p>
+</section>
+</section>
+<section id="data-collecction-process" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Data Collecction Process</h1>
+<section id="load-packages" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="load-packages"><span class="header-section-number">2.1</span> Load packages</h2>
+<ul>
+<li>Loading <code>readr</code><span class="citation" data-cites="readr_p">(<a href="#ref-readr_p" role="doc-biblioref">Wickham, Hester, and Bryan 2024</a>)</span> for writing and reading data.</li>
+<li>Loading <code>dplyr</code><span class="citation" data-cites="dplyr_p">(<a href="#ref-dplyr_p" role="doc-biblioref">Wickham et al. 2023</a>)</span> for manipulating data.</li>
+<li>Loading <code>fs</code><span class="citation" data-cites="fs_p">(<a href="#ref-fs_p" role="doc-biblioref">Hester, Wickham, and Csárdi 2023</a>)</span> for interacting with file system.</li>
+</ul>
+</section>
+<section id="download-the-data" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="download-the-data"><span class="header-section-number">2.2</span> Download the data</h2>
+<p>Download the <a href="https://catalog.ldc.upenn.edu/LDC97S62">SWDA corpus file</a> and save it in a temporary location. This ensures that when it is unarchived, the compressed file will be automatically removed. To prevent repeated downloads, use an <code>if</code> control statement to check if the unarchived file already exists.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># URL to SWDA corpus file</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>file_url <span class="ot">&lt;-</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://catalog.ldc.upenn.edu/docs/LDC97S62/swb1_dialogact_annot.tar.gz"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary file space for the SWDA corpus file</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>temp_file <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># The directory of decompressed file</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>extract_to_dir <span class="ot">&lt;-</span> <span class="st">"../data/original/swda/"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Download SWDA corpus compressed file, if the SWDA corpus has been compressed, no download needed</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir_exists</span>(extract_to_dir)){ <span class="fu">download.file</span>(<span class="at">url =</span> file_url, <span class="at">destfile =</span> temp_file)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="decompress-the-data" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="decompress-the-data"><span class="header-section-number">2.3</span> Decompress the data</h2>
+<p>Unarchive the SWDA corpus file and save it in the directory <code>data/original/swda</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># URL to SWDA corpus compressed file</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>file_url <span class="ot">&lt;-</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://catalog.ldc.upenn.edu/docs/LDC97S62/swb1_dialogact_annot.tar.gz"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Relative path to project/data/original directory</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dest_file <span class="ot">&lt;-</span> <span class="st">"../data/original/swda.tar.gz"</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Download SWDA corpus compressed file</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> file_url, <span class="at">destfile =</span> dest_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Decompress .zip file and extract to our target directory</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(temp_file)){<span class="fu">untar</span>(<span class="at">tarfile =</span> temp_file, <span class="at">exdir =</span> extract_to_dir)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="document-the-data" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="document-the-data"><span class="header-section-number">2.4</span> Document the data</h2>
+<ol type="1">
+<li>Load <code>qtalrkit</code><span class="citation" data-cites="qtalrkit_p">(<a href="#ref-qtalrkit_p" role="doc-biblioref">Francom 2024</a>)</span> to generate a <code>data_origin</code> file for noting the basic information of the data.</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Decompress .zip file and extract to our target directory</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(<span class="at">tarfile =</span> <span class="st">"../data/original/swda.tar.gz"</span>, <span class="at">exdir =</span> <span class="st">"../data/original/swda/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download qtalrkit package</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qtalrkit)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data_origin file</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">"../data/original/data_origin.csv"</span>)){<span class="fu">create_data_origin</span>(<span class="st">"../data/original/data_origin.csv"</span>)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ol start="2" type="1">
+<li>Project structure for the SWDA corpus data acquisition</li>
+</ol>
+<pre>project/
+├── process/
+│   ├── 1_acquire_data.qmd
+│   └── ...
+├── data/
+│   ├── analysis/
+│   ├── derived/
+│   └── original/
+│       ├── data_origin.csv
+│       └── swda/
+│           
+├── reports/
+├── DESCRIPTION
+├── Makefile
+└── README
+</pre>
+</section>
+</section>
+<section id="data" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data</h1>
+<section id="the-resulting-data" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="the-resulting-data"><span class="header-section-number">3.1</span> The resulting data</h2>
+<p>The extracted data comprises an unarchived file named <code>swda</code>, which includes one HTML file located in the <code>doc</code> folder, along with 14 folders containing <code>.utt</code> files.</p>
+</section>
+<section id="data-origin-file" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="data-origin-file"><span class="header-section-number">3.2</span> Data origin file</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Read data_origin file and assign it to t</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_origin_t <span class="ot">&lt;-</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"../data/original/data_origin.csv"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Present data_origin</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data_origin_t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  attribute               description                                           
+  &lt;chr&gt;                   &lt;chr&gt;                                                 
+1 Resource name           Switchboard-1 Release 2.                              
+2 Data source             https://catalog.ldc.upenn.edu/LDC97S62, https://doi.o…
+3 Data sampling frame     English telephone conversations in transcripts.       
+4 Data collection date(s) 1997.                                                 
+5 Data format             Information about the labels, labeler instructions, a…
+6 Data schema             The original 60 SWBD-DAMSL tags and their combination…
+7 License                 LDC User Agreement for Non-Members                    
+8 Attribution             Godfrey, John J., and Edward Holliman. Switchboard-1 …</code></pre>
+</div>
+</div>
+
+</section>
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-qtalrkit_p" class="csl-entry" role="listitem">
+Francom, Jerid. 2024. <em>Qtalrkit: Quantitative Text Analysis for Linguists Resource Kit</em>. <a href="https://github.com/qtalr/qtalrkit">https://github.com/qtalr/qtalrkit</a>.
+</div>
+<div id="ref-fs_p" class="csl-entry" role="listitem">
+Hester, Jim, Hadley Wickham, and Gábor Csárdi. 2023. <em>Fs: Cross-Platform File System Operations Based on ’Libuv’</em>. <a href="https://fs.r-lib.org">https://fs.r-lib.org</a>.
+</div>
+<div id="ref-dplyr_p" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, and Davis Vaughan. 2023. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://dplyr.tidyverse.org">https://dplyr.tidyverse.org</a>.
+</div>
+<div id="ref-readr_p" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, and Jennifer Bryan. 2024. <em>Readr: Read Rectangular Text Data</em>. <a href="https://readr.tidyverse.org">https://readr.tidyverse.org</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
