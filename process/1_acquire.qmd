@@ -10,33 +10,38 @@ format:
     toc-depth: 1
 bibliography: ../packages.bib
 ---
-# Data Description ([Switchboard-1 Release 2](https://catalog.ldc.upenn.edu/LDC97S62))
 
-## The nature of the data 
-Transcripts of telephone conversations constitute qualitative data.
+<!--
 
-## The source of the data
-Telephone conversations.
+Formatting:
 
-## The acquisition strategy that will be used
-Programmatic download using `download.file()` and decompression with `untar()`.
+1. You probably don't need to add a header for each of the subsections. It will be a bit easier to read if you just use prose to describe the details under each main header.
+2. The main headers should probably be short(er). Including too much information in the header makes it hard to read.
 
-## The format of the data
-A gzipped tarball file.
+-->
 
-## The license of the data
-[LDC User Agreement for Non-Members](https://catalog.ldc.upenn.edu/license/ldc-non-members-agreement.pdf)
+# Data Description
 
-# Data Collecction Process
+The data to be acquired is the [Switchboard-1 Release 2](https://catalog.ldc.upenn.edu/LDC97S62). The Switchboard corpus contains transcripts of telephone conversations from American English speakers.
+
+The data will be aquired using R. Specifically, the data will be downloaded from the Linguistic Data Consortium (LDC) website using the `download.file()` function and decompressed using the `untar()` function, as the file is in tarball format.
+
+The code will also include functionality to avoid repeated downloads and to document the data acquisition process.
+
+The data license is available at the following link: [LDC User Agreement for Non-Members](https://catalog.ldc.upenn.edu/license/ldc-non-members-agreement.pdf)
+
+# Data Collection Process
 
 ## Load packages
-*    Loading `readr`[@readr_p] for writing and reading data.
-*    Loading `dplyr`[@dplyr_p] for manipulating data.
-*    Loading `fs`[@fs_p] for interacting with file system.
+
+<!-- Great job creating .bib entries for these packages! -->
+
+*  Loading `readr`[@readr_p] for writing and reading data.
+*  Loading `dplyr`[@dplyr_p] for manipulating data.
+*  Loading `fs`[@fs_p] for interacting with file system.
 
 ```{r}
 #| label: setup-packages
-#| echo: false
 #| message: false
 
 # Load packages
@@ -46,7 +51,8 @@ library(fs)
 ```
 
 ## Download the data
-Download the [SWDA corpus file](https://catalog.ldc.upenn.edu/LDC97S62) and save it in a temporary location. This ensures that when it is unarchived, the compressed file will be automatically removed. To prevent repeated downloads, use an `if` control statement to check if the unarchived file already exists.
+
+Download the [SWDA corpus file](https://catalog.ldc.upenn.edu/docs/LDC97S62/swb1_dialogact_annot.tar.gz) and save it in a temporary location. This ensures that when it is unarchived, the compressed file will be automatically removed. To prevent repeated downloads, use an `if` control statement to check if the unarchived file already exists.
 
 ```{r}
 #| label: download-archive
@@ -62,20 +68,30 @@ temp_file <- tempfile()
 extract_to_dir <- "../data/original/swda/"
 
 # Download SWDA corpus compressed file, if the SWDA corpus has been compressed, no download needed
-if (!dir_exists(extract_to_dir)){ download.file(url = file_url, destfile = temp_file)}
+if (!dir_exists(extract_to_dir)){
+  download.file(url = file_url, destfile = temp_file)
+  }
 ```
 
+<!--
+It is often easier to read `if` statments if the condition is on a separate line. This is a small thing, but it can make the code easier to read.
+-->
+
 ## Decompress the data
+
 Unarchive the SWDA corpus file and save it in the directory  `data/original/swda`.
 
 ```{r}
 #| label: unarchive
 
 # Decompress .zip file and extract to our target directory
-if(file_exists(temp_file)){untar(tarfile = temp_file, exdir = extract_to_dir)}
+if(file_exists(temp_file)) {
+  untar(tarfile = temp_file, exdir = extract_to_dir)
+  }
 ```
 
 ## Document the data
+
 1. Load `qtalrkit`[@qtalrkit_p] to generate a `data_origin` file for noting the basic information of the data.
 
 ```{r}
@@ -85,10 +101,18 @@ if(file_exists(temp_file)){untar(tarfile = temp_file, exdir = extract_to_dir)}
 library(qtalrkit)
 
 # Create a data_origin file
-if (!file.exists("../data/original/data_origin.csv")){create_data_origin("../data/original/data_origin.csv")}
+if (!file.exists("../data/original/data_origin.csv")) {
+  create_data_origin("../data/original/data_origin.csv")
+  }
 ```
 
-2.  Project structure for the SWDA corpus data acquisition
+<!--
+After creating this file template, you will open this file and fill out the relevant information for the SWDA corpus data.
+
+You can edit the CSV file directly in RStudio, or you can navigate to the file on your computer and open it in a text editor or spreadsheet program.
+-->
+
+1. Project structure for the SWDA corpus data acquisition
 
 <pre>
 project/
@@ -101,17 +125,30 @@ project/
 │   └── original/
 │       ├── data_origin.csv
 │       └── swda/
-│           
+│
 ├── reports/
 ├── DESCRIPTION
 ├── Makefile
 └── README
 </pre>
 
-# Data
+<!--
+A neat function in the `fs` package is `dir_tree()`. This function can be used to create a tree of the project structure.
 
-## The resulting data 
-The extracted data comprises an unarchived file named `swda`, which includes one HTML file located in the `doc` folder, along with 14 folders containing `.utt` files.
+```{r}
+#| label: dir-tree
+
+# Create a tree of the project structure
+dir_tree(path = "../", recurse = 2) # only show the first two levels
+```
+
+-->
+
+# Data description
+
+## The resulting data
+
+The extracted data comprises an unarchived folder named `swda/`, which includes one HTML file located in the `doc` folder, along with 14 folders containing `.utt` files.
 
 ## Data origin file
 
